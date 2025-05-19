@@ -1,0 +1,1482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KisanConnect | Chandrapur Crop Aggregator</title>
+    <style>
+        :root {
+            --primary: #4CAF50;
+            --primary-light: #81C784;
+            --primary-dark: #2E7D32;
+            --secondary: #FFC107;
+            --dark: #333;
+            --light: #f9f9f9;
+            --light-gray: #eee;
+            --medium-gray: #ddd;
+            --white: #fff;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+        }
+
+        .logo i {
+            margin-right: 0.5rem;
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+
+        .nav-links a {
+            position: relative;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .menu-btn {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/api/placeholder/1200/600');
+            background-size: cover;
+            background-position: center;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            border: 2px solid var(--white);
+            color: var(--white);
+            margin-left: 1rem;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--white);
+            color: var(--primary-dark);
+        }
+
+        /* Features Section */
+        .section {
+            padding: 4rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--primary-dark);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            background-color: var(--secondary);
+            bottom: -10px;
+            left: 25%;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            background-color: var(--primary-light);
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 1.5rem;
+        }
+
+        .feature-icon i {
+            font-size: 2rem;
+            color: var(--white);
+        }
+
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+        }
+
+        /* Crops Section */
+        .crops {
+            background-color: var(--light-gray);
+        }
+
+        .crop-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .crop-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+
+        .crop-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .crop-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .crop-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .crop-card:hover .crop-image img {
+            transform: scale(1.1);
+        }
+
+        .crop-info {
+            padding: 1.5rem;
+        }
+
+        .crop-info h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-dark);
+        }
+
+        .crop-info .price {
+            color: var(--primary);
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+
+        .crop-info .season {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: var(--dark);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        /* About Section */
+        .about {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-image {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+        }
+
+        .about-content h2 {
+            color: var(--primary-dark);
+            margin-bottom: 1.5rem;
+        }
+
+        .about-content p {
+            margin-bottom: 1rem;
+        }
+
+        .location-list {
+            margin-top: 1.5rem;
+        }
+
+        .location-list li {
+            list-style: none;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .location-list li i {
+            color: var(--primary);
+            margin-right: 0.5rem;
+        }
+
+        /* Dashboard Section */
+        .dashboard-container {
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .dashboard-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 1rem;
+            cursor: pointer;
+            background-color: var(--light-gray);
+        }
+
+        .tab.active {
+            background-color: var(--white);
+            font-weight: bold;
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 2rem;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .prices-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .prices-table th, .prices-table td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .prices-table th {
+            background-color: var(--primary-light);
+            color: var(--white);
+        }
+
+        .prices-table tr:hover {
+            background-color: var(--light-gray);
+        }
+
+        .price-trend {
+            color: green;
+            font-weight: bold;
+        }
+
+        .price-trend.down {
+            color: red;
+        }
+
+        /* Order Form */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--medium-gray);
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            background-color: var(--light-gray);
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .contact-info {
+            background-color: var(--primary-dark);
+            color: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+        }
+
+        .contact-info h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .contact-info-item {
+            display: flex;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-info-item i {
+            margin-right: 1rem;
+            color: var(--secondary);
+            font-size: 1.2rem;
+        }
+
+        .contact-form {
+            background-color: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .contact-form h3 {
+            margin-bottom: 1.5rem;
+            color: var(--primary-dark);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: var(--white);
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-col h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 2px;
+            background-color: var(--primary);
+            bottom: -10px;
+            left: 0;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.7rem;
+        }
+
+        .footer-links a {
+            color: var(--light-gray);
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-light);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .footer-social a {
+            display: inline-flex;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.1);
+            color: var(--white);
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+
+        .footer-social a:hover {
+            background-color: var(--primary);
+        }
+
+        .copyright {
+            margin-top: 2rem;
+            text-align: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+            color: var(--medium-gray);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            animation: modalOpen 0.4s;
+        }
+
+        @keyframes modalOpen {
+            from {opacity: 0; transform: scale(0.8);}
+            to {opacity: 1; transform: scale(1);}
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .menu-btn {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                background-color: var(--white);
+                width: 100%;
+                height: calc(100vh - 70px);
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding-top: 2rem;
+                transition: left 0.3s ease;
+                box-shadow: var(--shadow);
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-links li {
+                margin: 1.5rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .about {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animated {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        /* Weather Widget */
+        .weather-widget {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .weather-info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .weather-temp {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        .weather-icon {
+            font-size: 3rem;
+            color: var(--secondary);
+        }
+
+        .weather-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .weather-detail {
+            display: flex;
+            align-items: center;
+        }
+
+        .weather-detail i {
+            color: var(--primary);
+            margin-right: 0.5rem;
+        }
+
+        /* Language Selector */
+        .language-selector {
+            position: relative;
+            margin-left: 1.5rem;
+        }
+
+        .current-language {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .current-language img {
+            width: 20px;
+            height: 20px;
+            margin-right: 0.5rem;
+        }
+
+        .languages-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            border-radius: 5px;
+            width: 150px;
+            display: none;
+            z-index: 10;
+        }
+
+        .languages-dropdown.show {
+            display: block;
+        }
+
+        .language-option {
+            display: flex;
+            align-items: center;
+            padding: 0.7rem;
+            transition: background-color 0.3s;
+        }
+
+        .language-option:hover {
+            background-color: var(--light-gray);
+        }
+
+        .language-option img {
+            width: 20px;
+            height: 20px;
+            margin-right: 0.5rem;
+        }
+
+        /* Login Form */
+        .login-form {
+            text-align: center;
+        }
+
+        .login-form h3 {
+            margin-bottom: 1.5rem;
+            color: var(--primary-dark);
+        }
+
+        .login-options {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+        }
+
+        .login-options a {
+            color: var(--primary);
+        }
+
+        .register-link {
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <a href="#" class="logo">
+                <i class="fas fa-seedling"></i>
+                KisanConnect
+            </a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#crops">Crops</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#" class="login-btn">Login</a></li>
+            </ul>
+            <div class="language-selector">
+                <div class="current-language">
+                    <img src="/api/placeholder/20/20" alt="English">
+                    <span>EN</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="languages-dropdown">
+                    <div class="language-option">
+                        <img src="/api/placeholder/20/20" alt="English">
+                        <span>English</span>
+                    </div>
+                    <div class="language-option">
+                        <img src="/api/placeholder/20/20" alt="Nepali">
+                        <span>Nepali</span>
+                    </div>
+                    <div class="language-option">
+                        <img src="/api/placeholder/20/20" alt="Hindi">
+                        <span>Hindi</span>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content animated">
+            <h1>Connecting Farmers to Markets</h1>
+            <p>We buy crops directly from local farmers in Chandrapur and supply to factories across Nepal</p>
+            <div class="hero-btns">
+                <a href="#dashboard" class="btn btn-primary">Current Prices</a>
+                <a href="#contact" class="btn btn-secondary">Contact Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section">
+        <div class="section-title">
+            <h2>Our Services</h2>
+        </div>
+        <div class="features">
+            <div class="feature-card animated">
+                <div class="feature-icon">
+                    <i class="fas fa-hand-holding-seedling"></i>
+                </div>
+                <h3>Direct Purchasing</h3>
+                <p>We buy crops directly from farmers at competitive prices, eliminating middlemen and ensuring fair compensation</p>
+            </div>
+            <div class="feature-card animated">
+                <div class="feature-icon">
+                    <i class="fas fa-truck"></i>
+                </div>
+                <h3>Transport & Logistics</h3>
+                <p>We provide transportation from your farm to our collection centers, making the selling process hassle-free</p>
+            </div>
+            <div class="feature-card animated">
+                <div class="feature-icon">
+                    <i class="fas fa-industry"></i>
+                </div>
+                <h3>Industrial Supply</h3>
+                <p>We connect your produce with industrial buyers in Hetauda, Naranghat, and Biratnagar, ensuring stable demand</p>
+            </div>
+            <div class="feature-card animated">
+                <div class="feature-icon">
+                    <i class="fas fa-money-bill-wave"></i>
+                </div>
+                <h3>Quick Payments</h3>
+                <p>Get paid quickly and securely through bank transfers or cash, typically within 48 hours of crop delivery</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Crops Section -->
+    <section id="crops" class="section crops">
+        <div class="section-title">
+            <h2>Crops We Purchase</h2>
+        </div>
+        <div class="crop-gallery">
+            <div class="crop-card animated">
+                <div class="crop-image">
+                    <img src="/api/placeholder/300/200" alt="Maize (Corn)">
+                </div>
+                <div class="crop-info">
+                    <h3>Maize (Corn)</h3>
+                    <p>High-quality corn for animal feed and industrial processing</p>
+                    <div class="price">Current Price: NPR 23-25 per kg</div>
+                    <span class="season">Peak Season: Jun-Aug</span>
+                </div>
+            </div>
+            <div class="crop-card animated">
+                <div class="crop-image">
+                    <img src="/api/placeholder/300/200" alt="Rice (Paddy)">
+                </div>
+                <div class="crop-info">
+                    <h3>Rice (Paddy)</h3>
+                    <p>Premium varieties of paddy rice for food processing</p>
+                    <div class="price">Current Price: NPR 27-32 per kg</div>
+                    <span class="season">Peak Season: Oct-Nov</span>
+                </div>
+            </div>
+            <div class="crop-card animated">
+                <div class="crop-image">
+                    <img src="/api/placeholder/300/200" alt="Wheat">
+                </div>
+                <div class="crop-info">
+                    <h3>Wheat</h3>
+                    <p>High-protein wheat for flour mills and food production</p>
+                    <div class="price">Current Price: NPR 29-31 per kg</div>
+                    <span class="season">Peak Season: Mar-Apr</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="section-title">
+            <h2>About Us</h2>
+        </div>
+        <div class="about">
+            <div class="about-image animated">
+                <img src="/api/placeholder/500/400" alt="Our Farm Collection Center">
+            </div>
+            <div class="about-content animated">
+                <h2>Bridging Farmers to Industries Since 2018</h2>
+                <p>Based in Chandrapur, Rautahat, we are a leading crop aggregator dedicated to supporting local farmers while meeting the demands of Nepal's growing industrial sector.</p>
+                <p>Our mission is to create sustainable value chains that benefit both agricultural producers and industrial consumers, contributing to Nepal's food security and economic development.</p>
+                <h3>Our Reach</h3>
+                <ul class="location-list">
+                    <li><i class="fas fa-map-marker-alt"></i> Main Collection Center: Chandrapur, Rautahat</li>
+                    <li><i class="fas fa-industry"></i> Industrial Partners in Hetauda</li>
+                    <li><i class="fas fa-industry"></i> Industrial Partners in Naranghat</li>
+                    <li><i class="fas fa-industry"></i> Industrial Partners in Biratnagar</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section id="dashboard" class="section">
+        <div class="section-title">
+            <h2>Farmer Dashboard</h2>
+        </div>
+        
+        <!-- Weather Widget -->
+        <div class="weather-widget animated">
+            <h3>Weather in Chandrapur</h3>
+            <div class="weather-info">
+                <div>
+                    <div class="weather-temp">29°C</div>
+                    <div>Partly Cloudy</div>
+                </div>
+                <div class="weather-icon">
+                    <i class="fas fa-cloud-sun"></i>
+                </div>
+            </div>
+            <div class="weather-details">
+                <div class="weather-detail">
+                    <i class="fas fa-wind"></i>
+                    <span>Wind: 6 km/h</span>
+                </div>
+                <div class="weather-detail">
+                    <i class="fas fa-tint"></i>
+                    <span>Humidity: 72%</span>
+                </div>
+                <div class="weather-detail">
+                    <i class="fas fa-cloud-rain"></i>
+                    <span>Precipitation: 40%</span>
+                </div>
+                <div class="weather-detail">
+                    <i class="fas fa-thermometer-half"></i>
+                    <span>Hi/Lo: 32°/24°</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="dashboard-container animated">
+            <div class="dashboard-tabs">
+                <div class="tab active" data-tab="prices">Current Prices</div>
+                <div class="tab" data-tab="trends">Price Trends</div>
+                <div class="tab" data-tab="sell">Sell Your Crops</div>
+            </div>
+            
+            <div class="tab-content active" id="prices-tab">
+                <h3>Today's Purchasing Prices</h3>
+                <p>Last updated: May 19, 2025</p>
+                <table class="prices-table">
+                    <thead>
+                        <tr>
+                            <th>Crop</th>
+                            <th>Variety</th>
+                            <th>Quality Grade</th>
+                            <th>Price per KG</th>
+                            <th>Trend</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Maize</td>
+                            <td>Yellow Hybrid</td>
+                            <td>Premium</td>
+                            <td>NPR 25.50</td>
+                            <td class="price-trend">↑ 0.50</td>
+                        </tr>
+                        <tr>
+                            <td>Maize</td>
+                            <td>Yellow Hybrid</td>
+                            <td>Standard</td>
+                            <td>NPR 23.00</td>
+                            <td class="price-trend">↑ 0.25</td>
+                        </tr>
+                        <tr>
+                            <td>Rice</td>
+                            <td>Basmati</td>
+                            <td>Premium</td>
+                            <td>NPR 32.75</td>
+                            <td class="price-trend">↑ 1.25</td>
+                        </tr>
+                        <tr>
+                            <td>Rice</td>
+                            <td>Mansuli</td>
+                            <td>Standard</td>
+                            <td>NPR 28.50</td>
+                            <td class="price-trend">↑ 0.75</td>
+                        </tr>
+                        <tr>
+                            <td>Wheat</td>
+                            <td>HD-2967</td>
+                            <td>Premium</td>
+                            <td>NPR 31.25</td>
+                            <td class="price-trend down">↓ 0.50</td>
+                        </tr>
+                        <tr>
+                            <td>Wheat</td>
+                            <td>PBW-343</td>
+                            <td>Standard</td>
+                            <td>NPR 29.00</td>
+                            <td class="price-trend">↑ 0.25</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="tab-content" id="trends-tab">
+                <h3>Price Trends (Last 30 Days)</h3>
+                <div class="chart-container" style="position: relative; height:300px; width:100%">
+                    <canvas id="priceChart"></canvas>
+                </div>
+                <div class="market-insights">
+                    <h4>Market Insights</h4>
+                    <ul>
+                        <li>Maize prices have shown steady increase due to higher demand from poultry feed industry</li>
+                        <li>Rice prices rising with post-harvest season and reduced inventory</li>
+                        <li>Wheat prices stabilizing after harvest completion in southern districts</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="sell-tab">
+                <h3>Sell Your Crops</h3>
+                <p>Fill out the form below to schedule a pickup or delivery of your crops:</p>
+                <form id="sell-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="farmer-name">Full Name</label>
+                            <input type="text" id="farmer-name" class="form-control" placeholder="Your name">
+                        </div>
+                        <div class="form-group">
+                            <label for="farmer-phone">Phone Number</label>
+                            <input type="tel" id="farmer-phone" class="form-control" placeholder="98XXXXXXXX">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="farmer-address">Farm Address</label>
+                        <input type="text" id="farmer-address" class="form-control" placeholder="Village, Ward, Municipality">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="crop-type">Crop Type</label>
+                            <select id="crop-type" class="form-control">
+                                <option value="">-- Select Crop --</option>
+                                <option value="maize">Maize (Corn)</option>
+                                <option value="rice">Rice (Paddy)</option>
+                                <option value="wheat">Wheat</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="crop-variety">Crop Variety</label>
+                            <select id="crop-variety" class="form-control">
+                                <option value="">-- Select Variety --</option>
+                                <!-- Options will be populated based on crop selection -->
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="crop-quantity">Estimated Quantity (kg)</label>
+                            <input type="number" id="crop-quantity" class="form-control" placeholder="Enter quantity">
+                        </div>
+                        <div class="form-group">
+                            <label for="harvest-date">Harvest Date</label>
+                            <input type="date" id="harvest-date" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="preferred-delivery">Preferred Delivery Method</label>
+                        <select id="preferred-delivery" class="form-control">
+                            <option value="pickup">Request Pickup from Farm</option>
+                            <option value="self">Self Delivery to Collection Center</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="notes">Additional Notes</label>
+                        <textarea id="notes" class="form-control" rows="3" placeholder="Any additional information about your crops"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Request</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section contact">
+        <div class="section-title">
+            <h2>Contact Us</h2>
+        </div>
+        <div class="contact-container">
+            <div class="contact-info animated">
+                <h3>Get in Touch</h3>
+                <div class="contact-info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <p>Main Office:</p>
+                        <p>Chandrapur Municipality, Ward No. 5</p>
+                        <p>Rautahat, Nepal</p>
+                    </div>
+                </div>
+                <div class="contact-info-item">
+                    <i class="fas fa-phone-alt"></i>
+                    <div>
+                        <p>Phone:</p>
+                        <p>+977 9812345678</p>
+                        <p>+977 9887654321</p>
+                    </div>
+                </div>
+                <div class="contact-info-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <p>Email:</p>
+                        <p>info@kisanconnect.com</p>
+                        <p>support@kisanconnect.com</p>
+                    </div>
+                </div>
+                <div class="contact-info-item">
+                    <i class="fas fa-clock"></i>
+                    <div>
+                        <p>Operating Hours:</p>
+                        <p>Sunday - Friday: 8:00 AM - 6:00 PM</p>
+                        <p>Saturday: 8:00 AM - 2:00 PM</p>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-form animated">
+                <h3>Send us a Message</h3>
+                <form id="contact-form">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" class="form-control" placeholder="Your name">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" class="form-control" placeholder="Your email">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="tel" id="phone" class="form-control" placeholder="Your phone number">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" class="form-control" placeholder="Message subject">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" class="form-control" rows="5" placeholder="Write your message here"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>KisanConnect</h3>
+                <p>Connecting farmers to markets since 2018. We are dedicated to supporting local agriculture and strengthening Nepal's food supply chain.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#crops">Crops</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#dashboard">Dashboard</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Services</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Crop Purchase</a></li>
+                    <li><a href="#">Farm Pickup</a></li>
+                    <li><a href="#">Market Updates</a></li>
+                    <li><a href="#">Advisory Services</a></li>
+                    <li><a href="#">Farmer Training</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Subscribe</h3>
+                <p>Subscribe to receive price updates and news</p>
+                <form class="footer-subscribe">
+                    <div class="form-group">
+                        <input type="email" class="form-control" placeholder="Your email address" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 KisanConnect. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal" id="login-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="login-form">
+                <h3>Login to Your Account</h3>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-phone">Phone Number</label>
+                        <input type="tel" id="login-phone" class="form-control" placeholder="Enter your phone number">
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" class="form-control" placeholder="Enter your password">
+                    </div>
+                    <div class="login-options">
+                        <div>
+                            <input type="checkbox" id="remember-me">
+                            <label for="remember-me">Remember me</label>
+                        </div>
+                        <a href="#">Forgot Password?</a>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                    <div class="register-link">
+                        <p>Don't have an account? <a href="#">Register Now</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <script>
+        // Mobile Menu Toggle
+        const menuBtn = document.querySelector('.menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Language Selector
+        const langSelector = document.querySelector('.current-language');
+        const langDropdown = document.querySelector('.languages-dropdown');
+        
+        langSelector.addEventListener('click', () => {
+            langDropdown.classList.toggle('show');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!langSelector.contains(e.target)) {
+                langDropdown.classList.remove('show');
+            }
+        });
+
+        // Tab Switching
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const target = tab.dataset.tab;
+                
+                // Remove active class from all tabs and contents
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                document.getElementById(`${target}-tab`).classList.add('active');
+            });
+        });
+
+        // Price Chart
+        const ctx = document.getElementById('priceChart').getContext('2d');
+        const priceChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Apr 20', 'Apr 25', 'Apr 30', 'May 5', 'May 10', 'May 15', 'May 19'],
+                datasets: [
+                    {
+                        label: 'Maize (Premium)',
+                        data: [23.75, 24.00, 24.25, 24.50, 24.75, 25.00, 25.50],
+                        borderColor: '#4CAF50',
+                        backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                        tension: 0.3
+                    },
+                    {
+                        label: 'Rice (Premium)',
+                        data: [29.50, 30.00, 30.75, 31.25, 31.50, 32.00, 32.75],
+                        borderColor: '#FFC107',
+                        backgroundColor: 'rgba(255, 193, 7, 0.1)',
+                        tension: 0.3
+                    },
+                    {
+                        label: 'Wheat (Premium)',
+                        data: [31.75, 32.00, 32.25, 32.00, 31.75, 31.50, 31.25],
+                        borderColor: '#2196F3',
+                        backgroundColor: 'rgba(33, 150, 243, 0.1)',
+                        tension: 0.3
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.dataset.label}: NPR ${context.raw}`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Price (NPR per kg)'
+                        },
+                        min: 23
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Date'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Dynamic Crop Variety Selection
+        const cropType = document.getElementById('crop-type');
+        const cropVariety = document.getElementById('crop-variety');
+        
+        cropType.addEventListener('change', () => {
+            // Clear previous options
+            cropVariety.innerHTML = '<option value="">-- Select Variety --</option>';
+            
+            // Add options based on crop type
+            switch(cropType.value) {
+                case 'maize':
+                    addOption(cropVariety, 'yellow-hybrid', 'Yellow Hybrid');
+                    addOption(cropVariety, 'white-hybrid', 'White Hybrid');
+                    addOption(cropVariety, 'local', 'Local Variety');
+                    break;
+                case 'rice':
+                    addOption(cropVariety, 'basmati', 'Basmati');
+                    addOption(cropVariety, 'mansuli', 'Mansuli');
+                    addOption(cropVariety, 'jeera-masino', 'Jeera Masino');
+                    addOption(cropVariety, 'local', 'Local Variety');
+                    break;
+                case 'wheat':
+                    addOption(cropVariety, 'hd-2967', 'HD-2967');
+                    addOption(cropVariety, 'pbw-343', 'PBW-343');
+                    addOption(cropVariety, 'local', 'Local Variety');
+                    break;
+            }
+        });
+        
+        function addOption(selectElement, value, text) {
+            const option = document.createElement('option');
+            option.value = value;
+            option.textContent = text;
+            selectElement.appendChild(option);
+        }
+
+        // Login Modal
+        const loginBtn = document.querySelector('.login-btn');
+        const loginModal = document.getElementById('login-modal');
+        const closeModal = document.querySelector('.close-modal');
+        
+        loginBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginModal.style.display = 'flex';
+        });
+        
+        closeModal.addEventListener('click', () => {
+            loginModal.style.display = 'none';
+        });
+        
+        window.addEventListener('click', (e) => {
+            if (e.target === loginModal) {
+                loginModal.style.display = 'none';
+            }
+        });
+
+        // Form Submissions
+        const sellForm = document.getElementById('sell-form');
+        const contactForm = document.getElementById('contact-form');
+        const loginForm = document.getElementById('login-form');
+        
+        sellForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Your crop selling request has been submitted! Our team will contact you soon.');
+            sellForm.reset();
+        });
+        
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your message! We will get back to you shortly.');
+            contactForm.reset();
+        });
+        
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Login functionality would be implemented in a production environment.');
+            loginModal.style.display = 'none';
+        });
+
+        // Animation on Scroll
+        document.addEventListener('DOMContentLoaded', () => {
+            const animatedElements = document.querySelectorAll('.animated');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+            
+            animatedElements.forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+                observer.observe(element);
+            });
+        });
+    </script>
+</body>
+</html>
